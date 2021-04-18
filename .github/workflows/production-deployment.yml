@@ -40,6 +40,8 @@ jobs:
       run: echo "aeroenvio-api-${GITHUB_SHA}" > version.txt
     - name: Stage file with app version
       run: git add version.txt
+    - name: Print file with app version
+      run: cat version.txt
     - name: Print repo status
       run: git status
     - name: Print eb version
