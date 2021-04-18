@@ -36,8 +36,11 @@ jobs:
         aws-access-key-id: ${{ secrets.aws_access_key_id }}
         aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
         aws-region: ${{ secrets.aws_region }}
-    - name: Create file with app version
-      run: echo "aeroenvio-api-${GITHUB_SHA}" > version.txt
+    - name: Set environment variable with app version
+      run: |
+          echo "app_version=aeroenvio-api-$(git rev-parse --short=8 HEAD)" >> $GITHUB_ENV
+    - name: Save app version to a file
+      run: echo "${{ env.app_version }}" > version.txt
     - name: Stage file with app version
       run: git add version.txt
     - name: Print file with app version
