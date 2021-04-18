@@ -17,7 +17,7 @@ jobs:
       with:
         python-version: '3.x'
     - run: |
-        apt-get -y update && apt-get -y install \
+        sudo apt-get -y update && sudo apt-get -y install \
           build-essential \
           zlib1g-dev \
           libssl-dev \
@@ -27,7 +27,7 @@ jobs:
           libreadline-dev \
           libbz2-dev \
     - run: |
-        pip install \
+        pip install --user \
           awscli \
           awsebcli \
     - name: Configure AWS credentials
