@@ -16,11 +16,31 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
+    - run: |
+        apt-get -y update && apt-get -y install \
+          build-essential \
+          zlib1g-dev \
+          libssl-dev \
+          libncurses-dev \
+          libffi-dev \
+          libsqlite3-dev \
+          libreadline-dev \
+          libbz2-dev \
+    - run: |
+        pip install \
+          awscli \
+          awsebcli \
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.aws_access_key_id }}
         aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
         aws-region: ${{ secrets.aws_region }}
-    - name: Deploy new app version
-      run: git log -n 5
+    - name: Create file with app version
+      run: echo "aeroenvio-api-${GITHUB_SHA}" > version.txt
+    - name: Stage file with app version
+      run: git add version.txt
+    - name: Print repo status
+      run: git status
+    - name: Print eb version
+      run: eb --version
